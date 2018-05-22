@@ -5,15 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-	"test:watch": "jest --watchAll",
-	"build": "webpack"
+    "test:watch": "jest --watchAll",
+    "build:dev": "webpack --mode development && dts-bundle-generator -o ./dist/chess-engine.d.ts src/index.ts",
+    "build:prod": "webpack --mode production && dts-bundle-generator -o ./dist/chess-engine.d.ts src/index.ts"
   },
   "author": "Arnaud Boeglin",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^22.2.3",
+    "@types/node": "^10.1.2",
     "babel": "^6.23.0",
     "babel-loader": "^7.1.4",
+    "dts-bundle-generator": "^1.2.0",
     "jest": "^22.4.4",
     "ts-jest": "^22.4.6",
     "ts-loader": "^4.3.0",
