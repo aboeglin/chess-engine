@@ -1,4 +1,5 @@
 import {createBoard, getSquare, Board, Square} from './board';
+import {Piece, Color, PieceType} from './pieces';
 
 describe('board', () => {
 
@@ -14,6 +15,16 @@ describe('board', () => {
 			expect(board.squares.find((s: Square) => s.x === 'h' && s.y === '8')).not.toBe(undefined);
 			expect(board.squares.find((s: Square) => s.x === 'a' && s.y === '0')).toBe(undefined);
 			expect(board.squares.find((s: Square) => s.x === 'i' && s.y === '1')).toBe(undefined);
+		});
+
+		it('should return a Board object containing 32 pieces', () => {
+			const board: Board = createBoard();
+			expect(board.pieces.length).toBe(32);
+		});
+
+		it('should return a Board object containing 16 white pieces', () => {
+			const board: Board = createBoard();
+			expect(board.pieces.filter((piece: Piece) => piece.color === Color.WHITE).length).toBe(16);
 		});
 	})
 

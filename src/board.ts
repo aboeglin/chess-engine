@@ -1,3 +1,4 @@
+import {Piece, PieceType, Color} from './pieces';
 import {numberToLetter} from './utils';
 
 interface Square {
@@ -7,6 +8,7 @@ interface Square {
 
 interface Board {
 	squares: Square[],
+	pieces: Piece[],
 };
 
 const createBoard = () : Board => {
@@ -15,6 +17,10 @@ const createBoard = () : Board => {
 			x: `${numberToLetter(Math.floor(index / 8))}`,
 			y: `${index % 8 + 1}`,
 		})),
+		pieces: [
+			...Array(16).fill({type: PieceType.PAWN, color: Color.WHITE}),
+			...Array(16).fill({type: PieceType.PAWN, color: Color.BLACK}),
+		],
 	};
 };
 
