@@ -18,6 +18,7 @@ const createBoard = () : Board => {
 	};
 };
 
+const getSquare = (x: string, y: string, board: Board) : Square =>
+	board.squares.find((square: Square) => square.x === x && square.y === y);
 
-
-export {createBoard, Board, Square};
+export {createBoard, getSquare, Board, Square};

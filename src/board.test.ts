@@ -1,4 +1,4 @@
-import {createBoard, Board, Square} from './board';
+import {createBoard, getSquare, Board, Square} from './board';
 
 describe('board', () => {
 
@@ -17,5 +17,26 @@ describe('board', () => {
 		});
 	})
 
+	describe('getSquare', () => {
+		it('should export a getSquare function', () => {
+			expect(typeof getSquare).toBe('function');
+		});
+
+		it('should return the corresponding square in a7', () => {
+			const board: Board = createBoard();
+			const piece: Square = getSquare('a', '7', board);
+
+			expect(piece.x).toBe('a');
+			expect(piece.y).toBe('7');
+		});
+
+		it('should return the corresponding square in f2', () => {
+			const board: Board = createBoard();
+			const piece: Square = getSquare('f', '2', board);
+
+			expect(piece.x).toBe('f');
+			expect(piece.y).toBe('2');
+		});
+	});
 
 });
