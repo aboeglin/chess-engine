@@ -18,8 +18,12 @@ const createBoard = () : Board => {
 			y: `${index % 8 + 1}`,
 		})),
 		pieces: [
-			...Array(16).fill({type: PieceType.PAWN, color: Color.WHITE}),
-			...Array(16).fill({type: PieceType.PAWN, color: Color.BLACK}),
+			...Array(8).fill({type: PieceType.PAWN, color: Color.WHITE}),
+			...Array(2).fill({type: PieceType.KNIGHT, color: Color.WHITE}),
+			...Array(6).fill({type: PieceType.BISHOP, color: Color.WHITE}),
+			...Array(8).fill({type: PieceType.PAWN, color: Color.BLACK}),
+			...Array(2).fill({type: PieceType.KNIGHT, color: Color.BLACK}),
+			...Array(6).fill({type: PieceType.BISHOP, color: Color.BLACK}),
 		],
 	};
 };

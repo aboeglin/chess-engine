@@ -26,6 +26,18 @@ describe('board', () => {
 			const board: Board = createBoard();
 			expect(board.pieces.filter((piece: Piece) => piece.color === Color.WHITE).length).toBe(16);
 		});
+
+		it('should return a Board object containing 8 white PAWN and 8 black PAWN', () => {
+			const board: Board = createBoard();
+			expect(board.pieces.filter((piece: Piece) => piece.color === Color.WHITE && piece.type === PieceType.PAWN).length).toBe(8);
+			expect(board.pieces.filter((piece: Piece) => piece.color === Color.BLACK && piece.type === PieceType.PAWN).length).toBe(8);
+		});
+
+		it('should return a Board object containing 2 white KNIGHT and 2 black KNIGHT', () => {
+			const board: Board = createBoard();
+			expect(board.pieces.filter((piece: Piece) => piece.color === Color.WHITE && piece.type === PieceType.KNIGHT).length).toBe(2);
+			expect(board.pieces.filter((piece: Piece) => piece.color === Color.BLACK && piece.type === PieceType.KNIGHT).length).toBe(2);
+		});
 	})
 
 	describe('getSquare', () => {
