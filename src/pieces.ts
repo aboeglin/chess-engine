@@ -15,6 +15,8 @@ enum Color {
 interface Piece {
 	type: PieceType,
 	color: Color,
+	x: string,
+	y: string,
 };
 
 export {Piece, PieceType, Color};
