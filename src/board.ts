@@ -10,17 +10,17 @@ const createBoard = () : Board => {
 	return {
 		pieces: [
 			...Array(8).fill({type: PieceType.PAWN, color: Color.WHITE}).map(appendInitialPosition),
-			...Array(2).fill({type: PieceType.KNIGHT, color: Color.WHITE}),
-			...Array(2).fill({type: PieceType.BISHOP, color: Color.WHITE}),
-			...Array(2).fill({type: PieceType.ROOK, color: Color.WHITE}),
-			...Array(1).fill({type: PieceType.QUEEN, color: Color.WHITE}),
-			...Array(1).fill({type: PieceType.KING, color: Color.WHITE}),
+			...Array(2).fill({type: PieceType.KNIGHT, color: Color.WHITE}).map(appendInitialPosition),
+			...Array(2).fill({type: PieceType.BISHOP, color: Color.WHITE}).map(appendInitialPosition),
+			...Array(2).fill({type: PieceType.ROOK, color: Color.WHITE}).map(appendInitialPosition),
+			...Array(1).fill({type: PieceType.QUEEN, color: Color.WHITE}).map(appendInitialPosition),
+			...Array(1).fill({type: PieceType.KING, color: Color.WHITE}).map(appendInitialPosition),
 			...Array(8).fill({type: PieceType.PAWN, color: Color.BLACK}).map(appendInitialPosition),
-			...Array(2).fill({type: PieceType.KNIGHT, color: Color.BLACK}),
-			...Array(2).fill({type: PieceType.BISHOP, color: Color.BLACK}),
-			...Array(2).fill({type: PieceType.ROOK, color: Color.BLACK}),
-			...Array(1).fill({type: PieceType.QUEEN, color: Color.BLACK}),
-			...Array(1).fill({type: PieceType.KING, color: Color.BLACK}),
+			...Array(2).fill({type: PieceType.KNIGHT, color: Color.BLACK}).map(appendInitialPosition),
+			...Array(2).fill({type: PieceType.BISHOP, color: Color.BLACK}).map(appendInitialPosition),
+			...Array(2).fill({type: PieceType.ROOK, color: Color.BLACK}).map(appendInitialPosition),
+			...Array(1).fill({type: PieceType.QUEEN, color: Color.BLACK}).map(appendInitialPosition),
+			...Array(1).fill({type: PieceType.KING, color: Color.BLACK}).map(appendInitialPosition),
 		],
 	};
 };
@@ -32,7 +32,37 @@ const appendInitialPosition = (piece: Piece, index: number) => {
 				...piece,
 				x: numberToLetter(index),
 				y: piece.color === Color.WHITE ? '2' : '7',
-			}
+			};
+		case PieceType.KNIGHT:
+			return {
+				...piece,
+				x: numberToLetter(1 + index * 5),
+				y: piece.color === Color.WHITE ? '1' : '8',
+			};
+		case PieceType.BISHOP:
+			return {
+				...piece,
+				x: numberToLetter(2 + index * 3),
+				y: piece.color === Color.WHITE ? '1' : '8',
+			};
+		case PieceType.ROOK:
+			return {
+				...piece,
+				x: numberToLetter(0 + index * 7),
+				y: piece.color === Color.WHITE ? '1' : '8',
+			};
+		case PieceType.QUEEN:
+			return {
+				...piece,
+				x: 'd',
+				y: piece.color === Color.WHITE ? '1' : '8',
+			};
+		case PieceType.KING:
+			return {
+				...piece,
+				x: 'e',
+				y: piece.color === Color.WHITE ? '1' : '8',
+			};
 		default:
 			return {
 				...piece,

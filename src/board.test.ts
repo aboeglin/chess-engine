@@ -45,13 +45,77 @@ describe('board', () => {
 			expect(board.pieces.filter((piece: Piece) => piece.color === Color.BLACK && piece.type === PieceType.KING).length).toBe(1);
 		});
 
-		it('should return a board with pieces at the initial position', () => {
+		it('should return a board with pawns at the initial position', () => {
 			const board: Board = createBoard();
 
-			board.pieces.filter(piece => piece.type === PieceType.PAWN && piece.color === Color.WHITE).forEach((piece) => {
-				const whitePawnXPositions: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+			board.pieces.filter((piece: Piece) => piece.type === PieceType.PAWN).forEach((piece) => {
+				const pawnXPositions: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-				expect(whitePawnXPositions.findIndex((x: string) => x === piece.x && piece.y === '2')).not.toEqual(-1);
+				expect(pawnXPositions.findIndex((x: string) =>
+					x === piece.x && piece.y === '2' && piece.color === Color.WHITE ||
+					x === piece.x && piece.y === '7' && piece.color === Color.BLACK
+				)).not.toEqual(-1);
+			});
+		});
+
+		it('should return a board with knights at the initial position', () => {
+			const board: Board = createBoard();
+
+			board.pieces.filter((piece: Piece) => piece.type === PieceType.KNIGHT).forEach((piece) => {
+				const knightXPositions: string[] = ['b', 'g'];
+
+				expect(knightXPositions.findIndex((x: string) =>
+					x === piece.x && piece.y === '1' && piece.color === Color.WHITE ||
+					x === piece.x && piece.y === '8' && piece.color === Color.BLACK
+				)).not.toEqual(-1);
+			});
+		});
+
+		it('should return a board with bishops at the initial position', () => {
+			const board: Board = createBoard();
+
+			board.pieces.filter((piece: Piece) => piece.type === PieceType.BISHOP).forEach((piece) => {
+				const bishopXPositions: string[] = ['c', 'f'];
+
+				expect(bishopXPositions.findIndex((x: string) =>
+					x === piece.x && piece.y === '1' && piece.color === Color.WHITE ||
+					x === piece.x && piece.y === '8' && piece.color === Color.BLACK
+				)).not.toEqual(-1);
+			});
+		});
+
+		it('should return a board with rooks at the initial position', () => {
+			const board: Board = createBoard();
+
+			board.pieces.filter((piece: Piece) => piece.type === PieceType.ROOK).forEach((piece) => {
+				const rookXPositions: string[] = ['a', 'h'];
+
+				expect(rookXPositions.findIndex((x: string) =>
+					x === piece.x && piece.y === '1' && piece.color === Color.WHITE ||
+					x === piece.x && piece.y === '8' && piece.color === Color.BLACK
+				)).not.toEqual(-1);
+			});
+		});
+
+		it('should return a board with queens at the initial position', () => {
+			const board: Board = createBoard();
+
+			board.pieces.filter((piece: Piece) => piece.type === PieceType.QUEEN).forEach((piece) => {
+				expect(
+					piece.color === Color.WHITE && piece.x === 'd' && piece.y === '1' ||
+					piece.color === Color.BLACK && piece.x === 'd' && piece.y === '8'
+				).toBe(true);
+			});
+		});
+
+		it('should return a board with kings at the initial position', () => {
+			const board: Board = createBoard();
+
+			board.pieces.filter((piece: Piece) => piece.type === PieceType.KING).forEach((piece) => {
+				expect(
+					piece.color === Color.WHITE && piece.x === 'e' && piece.y === '1' ||
+					piece.color === Color.BLACK && piece.x === 'e' && piece.y === '8'
+				).toBe(true);
 			});
 		});
 	})
