@@ -2,7 +2,6 @@ import {createBoard, findPiece, Board} from './board';
 import {Piece, Color, PieceType} from './pieces';
 
 describe('board', () => {
-
 	describe('createBoard', () => {
 		it('should export a createBoard function', () => {
 			expect(typeof createBoard).toBe('function');
