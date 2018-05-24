@@ -6,6 +6,11 @@ interface Board {
 	pieces: Piece[],
 };
 
+/**
+ * Creates an initial board
+ *
+ * @return a board with pieces at their initial positions.
+ */
 const createBoard = () : Board => {
 	return {
 		pieces: [
@@ -72,6 +77,11 @@ const appendInitialPosition = (piece: Piece, index: number) => {
 	}
 };
 
+/**
+ * Retrieves a piece at the given coordinate in the given board.
+ *
+ * @return the piece found in the given board at the given x and y coordinates. It returns undefined if no piece is at that coordinate.
+ */
 const findPiece = (x: string, y: string, board: Board) : Piece =>
 	board.pieces.find((piece: Piece) => piece.x === x && piece.y === y);
 
