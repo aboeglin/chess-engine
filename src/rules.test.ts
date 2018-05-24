@@ -68,6 +68,40 @@ describe('rules', () => {
 				expect(canMoveTo('a', '4', whitePawn, board)).toBe(true);
 				expect(canMoveTo('a', '5', blackPawn, board)).toBe(true);
 			});
+
+			it('should return false when a white pawn moves two squares ahead from its initial position, but there is a piece in between', () => {
+				const board: Board = createBoard();
+
+				const whitePawn = findPiece('a', '2', board);
+				const blackPawn = findPiece('a', '7', board);
+
+				const blackPawnIndex = board.pieces.findIndex(piece => piece === blackPawn);
+
+				const boardWithPawnsAhead = {
+					pieces: Object.assign([], board.pieces, {
+						[blackPawnIndex]: {...blackPawn, x: 'a', y: '3'},
+					})
+				};
+
+				expect(canMoveTo('a', '4', whitePawn, boardWithPawnsAhead)).toBe(false);
+			});
+
+			it('should return false when a black pawn moves two squares ahead from its initial position, but there is a piece in between', () => {
+				const board: Board = createBoard();
+
+				const whitePawn = findPiece('a', '2', board);
+				const blackPawn = findPiece('a', '7', board);
+
+				const whitePawnIndex = board.pieces.findIndex(piece => piece === whitePawn);
+
+				const boardWithPawnsAhead = {
+					pieces: Object.assign([], board.pieces, {
+						[whitePawnIndex]: {...whitePawn, x: 'a', y: '6'},
+					})
+				};
+
+				expect(canMoveTo('a', '5', blackPawn, boardWithPawnsAhead)).toBe(false);
+			});
 		});
 	});
 });
