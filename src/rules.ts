@@ -13,16 +13,26 @@ const canMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean =>
 	}
 };
 
-const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean =>
-	// white pawn moves one step
-	parseInt(y) - parseInt(piece.y) === 1 && piece.color === Color.WHITE && !findPiece(x, y, board) ||
-	// black pawn moves one step
-	parseInt(y) - parseInt(piece.y) === -1 && piece.color === Color.BLACK && !findPiece(x, y, board) ||
-	// white pawn moves two steps
-	parseInt(y) - parseInt(piece.y) === 2 && piece.color === Color.WHITE && (piece.y === '2' || piece.y === '7')
-	&& !findPiece(x, `${parseInt(y) - 1}`, board) && !findPiece(x, y, board) ||
-	// black pawn moves two steps
-	parseInt(y) - parseInt(piece.y) === -2 && piece.color === Color.BLACK && (piece.y === '2' || piece.y === '7')
-	&& !findPiece(x, `${parseInt(y) + 1}`, board) && !findPiece(x, y, board);
+const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
+	const pieceInDestination = findPiece(x, y, board);
+	return (
+		// white pawn moves one step
+		parseInt(y) - parseInt(piece.y) === 1 && x === piece.x && piece.color === Color.WHITE && !pieceInDestination ||
+		// black pawn moves one step
+		parseInt(y) - parseInt(piece.y) === -1 && x === piece.x && piece.color === Color.BLACK && !pieceInDestination ||
+		// white pawn moves two steps
+		parseInt(y) - parseInt(piece.y) === 2 && x === piece.x && piece.color === Color.WHITE && (piece.y === '2' || piece.y === '7')
+		&& !findPiece(x, `${parseInt(y) - 1}`, board) && !pieceInDestination ||
+		// black pawn moves two steps
+		parseInt(y) - parseInt(piece.y) === -2 && x === piece.x && piece.color === Color.BLACK && (piece.y === '2' || piece.y === '7')
+		&& !findPiece(x, `${parseInt(y) + 1}`, board) && !pieceInDestination ||
+		// white pawn attacks in diagonal
+		parseInt(y) - parseInt(piece.y) === 1 && Math.abs(x.charCodeAt(0) - piece.x.charCodeAt(0)) === 1
+		&& pieceInDestination !== undefined && pieceInDestination.color === Color.BLACK ||
+		// black pawn attacks in diagonal
+		parseInt(y) - parseInt(piece.y) === -1 && Math.abs(x.charCodeAt(0) - piece.x.charCodeAt(0)) === 1
+		&& pieceInDestination !== undefined && pieceInDestination.color === Color.WHITE
+	);
+};
 
 export {canMoveTo};
