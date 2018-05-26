@@ -164,6 +164,39 @@ describe('rules', () => {
 
 				expect(canMoveTo('h', '3', bishop, board)).toBe(true);
 			});
+
+			it('should return false when going further than the first piece on the trajectory', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '1', type: PieceType.BISHOP, color: Color.WHITE},
+					{x: 'g', y: '2', type: PieceType.BISHOP, color: Color.WHITE},
+				]};
+
+				const bishop = findPiece('f', '1', board);
+
+				expect(canMoveTo('h', '3', bishop, board)).toBe(false);
+			});
+
+			it('should return false when the piece at the destination is the same color as the bishop moving', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '1', type: PieceType.BISHOP, color: Color.WHITE},
+					{x: 'h', y: '3', type: PieceType.BISHOP, color: Color.WHITE},
+				]};
+
+				const bishop = findPiece('f', '1', board);
+
+				expect(canMoveTo('h', '3', bishop, board)).toBe(false);
+			});
+
+			it('should return true when the piece at the destination is not the same color as the bishop moving', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '1', type: PieceType.BISHOP, color: Color.WHITE},
+					{x: 'h', y: '3', type: PieceType.BISHOP, color: Color.BLACK},
+				]};
+
+				const bishop = findPiece('f', '1', board);
+
+				expect(canMoveTo('h', '3', bishop, board)).toBe(true);
+			});
 		});
 	});
 });

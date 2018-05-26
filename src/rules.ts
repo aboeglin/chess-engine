@@ -1,6 +1,6 @@
 import {Board, findPiece} from './board';
 import {Piece, PieceType, Color} from './pieces';
-import {getDeltaX, getDeltaY} from './utils';
+import {getDeltaX, getDeltaY, letterToNumber, numberToLetter} from './utils';
 
 /**
  * A utility function that returns true if a piece can move to a certain place,
@@ -14,32 +14,47 @@ const canMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean =>
 };
 
 const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
-	const pieceInDestination = findPiece(x, y, board);
+	const pieceAtDestination = findPiece(x, y, board);
 	return (
 		// white pawn moves one step
-		parseInt(y) - parseInt(piece.y) === 1 && x === piece.x && piece.color === Color.WHITE && !pieceInDestination ||
+		parseInt(y) - parseInt(piece.y) === 1 && x === piece.x && piece.color === Color.WHITE && !pieceAtDestination ||
 		// black pawn moves one step
-		parseInt(y) - parseInt(piece.y) === -1 && x === piece.x && piece.color === Color.BLACK && !pieceInDestination ||
+		parseInt(y) - parseInt(piece.y) === -1 && x === piece.x && piece.color === Color.BLACK && !pieceAtDestination ||
 		// white pawn moves two steps
 		parseInt(y) - parseInt(piece.y) === 2 && x === piece.x && piece.color === Color.WHITE && (piece.y === '2' || piece.y === '7')
-		&& !findPiece(x, `${parseInt(y) - 1}`, board) && !pieceInDestination ||
+		&& !findPiece(x, `${parseInt(y) - 1}`, board) && !pieceAtDestination ||
 		// black pawn moves two steps
 		parseInt(y) - parseInt(piece.y) === -2 && x === piece.x && piece.color === Color.BLACK && (piece.y === '2' || piece.y === '7')
-		&& !findPiece(x, `${parseInt(y) + 1}`, board) && !pieceInDestination ||
+		&& !findPiece(x, `${parseInt(y) + 1}`, board) && !pieceAtDestination ||
 		// white pawn attacks in diagonal
 		parseInt(y) - parseInt(piece.y) === 1 && Math.abs(x.charCodeAt(0) - piece.x.charCodeAt(0)) === 1
-		&& pieceInDestination !== undefined && pieceInDestination.color === Color.BLACK ||
+		&& pieceAtDestination !== undefined && pieceAtDestination.color === Color.BLACK ||
 		// black pawn attacks in diagonal
 		parseInt(y) - parseInt(piece.y) === -1 && Math.abs(x.charCodeAt(0) - piece.x.charCodeAt(0)) === 1
-		&& pieceInDestination !== undefined && pieceInDestination.color === Color.WHITE
+		&& pieceAtDestination !== undefined && pieceAtDestination.color === Color.WHITE
 	);
 };
 
 const canBishopMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
+	const pieceAtDestination = findPiece(x, y, board);
 	const dx = getDeltaX(x, piece.x);
 	const dy = getDeltaX(y, piece.y);
 
-	return dx === dy;
+	const positionsOnTrajectory = Array(dx - 1).fill({}).map((_, index) => {
+		const xDirection = letterToNumber(x) - letterToNumber(piece.x);
+		const yDirection = parseInt(y) - parseInt(piece.y);
+
+		return {
+			x: xDirection > 0 ? numberToLetter(index + 1 + letterToNumber(piece.x)) : numberToLetter(-index - 1 + letterToNumber(piece.x)),
+			y: yDirection > 0 ? `${index + 1 + parseInt(piece.y)}` : `${-index - 1 + parseInt(piece.y)}`,
+		};
+	});
+
+	return (
+		dx === dy
+		&& !positionsOnTrajectory.find((position: {x: string, y: string}) => findPiece(position.x, position.y, board) !== undefined)
+		&& (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color)
+	);
 };
 
 export {canMoveTo};
