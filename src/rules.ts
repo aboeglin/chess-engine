@@ -14,7 +14,7 @@ const canMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean =>
 };
 
 const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
-	const pieceAtDestination = findPiece(x, y, board);
+	const pieceAtDestination: Piece = findPiece(x, y, board);
 	return (
 		// white pawn moves one step
 		parseInt(y) - parseInt(piece.y) === 1 && x === piece.x && piece.color === Color.WHITE && !pieceAtDestination ||
@@ -36,13 +36,13 @@ const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolea
 };
 
 const canBishopMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
-	const pieceAtDestination = findPiece(x, y, board);
-	const dx = getDeltaX(x, piece.x);
-	const dy = getDeltaX(y, piece.y);
+	const pieceAtDestination: Piece = findPiece(x, y, board);
+	const dx: number = getDeltaX(x, piece.x);
+	const dy: number = getDeltaX(y, piece.y);
 
 	const positionsOnTrajectory = Array(dx - 1).fill({}).map((_, index) => {
-		const xDirection = letterToNumber(x) - letterToNumber(piece.x);
-		const yDirection = parseInt(y) - parseInt(piece.y);
+		const xDirection: number = letterToNumber(x) - letterToNumber(piece.x);
+		const yDirection: number = parseInt(y) - parseInt(piece.y);
 
 		return {
 			x: xDirection > 0 ? numberToLetter(index + 1 + letterToNumber(piece.x)) : numberToLetter(-index - 1 + letterToNumber(piece.x)),
