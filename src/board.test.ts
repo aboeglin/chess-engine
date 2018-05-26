@@ -117,7 +117,7 @@ describe('board', () => {
 				).toBe(true);
 			});
 		});
-	})
+	});
 
 	describe('findPiece', () => {
 		it('should export a findPiece function', () => {

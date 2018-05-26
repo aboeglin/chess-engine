@@ -3,8 +3,8 @@ import {numberToLetter} from './utils';
 
 
 interface Board {
-	pieces: Piece[],
-};
+	pieces: Piece[];
+}
 
 /**
  * Creates an initial board
@@ -31,7 +31,7 @@ const createBoard = () : Board => {
 };
 
 const appendInitialPosition = (piece: Piece, index: number) => {
-	switch(piece.type) {
+	switch (piece.type) {
 		case PieceType.PAWN:
 			return {
 				...piece,

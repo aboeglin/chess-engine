@@ -22,7 +22,7 @@ describe('rules', () => {
 					pieces: Object.assign([], board.pieces, {
 						[whitePawnIndex]: {...whitePawn, x: 'a', y: '4'},
 						[blackPawnIndex]: {...blackPawn, x: 'a', y: '5'},
-					})
+					}),
 				};
 				const whitePawnMoved = findPiece('a', '4', boardWithPawnsAhead);
 				const blackPawnMoved = findPiece('a', '5', boardWithPawnsAhead);
@@ -52,7 +52,7 @@ describe('rules', () => {
 				const boardWithPawnsAhead = {
 					pieces: Object.assign([], board.pieces, {
 						[blackPawnIndex]: {...blackPawn, x: 'a', y: '3'},
-					})
+					}),
 				};
 				const blackPawnMoved = findPiece('a', '5', boardWithPawnsAhead);
 
@@ -80,7 +80,7 @@ describe('rules', () => {
 				const boardWithPawnsAhead = {
 					pieces: Object.assign([], board.pieces, {
 						[blackPawnIndex]: {...blackPawn, x: 'a', y: '3'},
-					})
+					}),
 				};
 
 				expect(canMoveTo('a', '4', whitePawn, boardWithPawnsAhead)).toBe(false);
@@ -97,7 +97,7 @@ describe('rules', () => {
 				const boardWithPawnsAhead = {
 					pieces: Object.assign([], board.pieces, {
 						[whitePawnIndex]: {...whitePawn, x: 'a', y: '6'},
-					})
+					}),
 				};
 
 				expect(canMoveTo('a', '5', blackPawn, boardWithPawnsAhead)).toBe(false);
