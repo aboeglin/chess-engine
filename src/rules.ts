@@ -40,15 +40,7 @@ const canBishopMoveTo = (x: string, y: string, piece: Piece, board: Board): bool
 	const dx: number = getDeltaX(x, piece.x);
 	const dy: number = getDeltaX(y, piece.y);
 
-	const positionsOnTrajectory = Array(dx - 1).fill({}).map((_, index) => {
-		const xDirection: number = letterToNumber(x) - letterToNumber(piece.x);
-		const yDirection: number = parseInt(y) - parseInt(piece.y);
-
-		return {
-			x: xDirection > 0 ? numberToLetter(index + 1 + letterToNumber(piece.x)) : numberToLetter(-index - 1 + letterToNumber(piece.x)),
-			y: yDirection > 0 ? `${index + 1 + parseInt(piece.y)}` : `${-index - 1 + parseInt(piece.y)}`,
-		};
-	});
+	const positionsOnTrajectory = getBishopTrajectory(x, y, piece.x, piece.y);
 
 	return (
 		// bishop goes in diagonal
@@ -59,5 +51,16 @@ const canBishopMoveTo = (x: string, y: string, piece: Piece, board: Board): bool
 		&& (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color)
 	);
 };
+
+const getBishopTrajectory = (x1: string, y1: string, x2: string, y2: string) : {x: string, y: string}[] =>
+	Array(getDeltaY(y1, y2) - 1).fill({}).map((_, index) => {
+		const xDirection: number = letterToNumber(x1) - letterToNumber(x2) > 0 ? 1 : -1;
+		const yDirection: number = parseInt(y1) - parseInt(y2) > 0 ? 1 : -1;
+
+		return {
+			x: numberToLetter(index * xDirection + 1 + letterToNumber(x2)),
+			y: `${index * yDirection + 1 + parseInt(y2)}`,
+		};
+	});
 
 export {canMoveTo};
