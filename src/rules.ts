@@ -51,8 +51,11 @@ const canBishopMoveTo = (x: string, y: string, piece: Piece, board: Board): bool
 	});
 
 	return (
+		// bishop goes in diagonal
 		dx === dy
+		// bishop cannot go beyond another piece
 		&& !positionsOnTrajectory.find((position: {x: string, y: string}) => findPiece(position.x, position.y, board) !== undefined)
+		// bishop cannot attack a piece of the same color
 		&& (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color)
 	);
 };
