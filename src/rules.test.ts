@@ -153,5 +153,17 @@ describe('rules', () => {
 				expect(canMoveTo('b', '6', whitePawn, board)).toBe(false);
 			});
 		});
+
+		describe('bishop canMoveTo', () => {
+			it('should return true when the bishop moves diagonally', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '1', type: PieceType.BISHOP, color: Color.WHITE},
+				]};
+
+				const bishop = findPiece('f', '1', board);
+
+				expect(canMoveTo('h', '3', bishop, board)).toBe(true);
+			});
+		});
 	});
 });

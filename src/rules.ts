@@ -1,5 +1,6 @@
 import {Board, findPiece} from './board';
 import {Piece, PieceType, Color} from './pieces';
+import {getDeltaX, getDeltaY} from './utils';
 
 /**
  * A utility function that returns true if a piece can move to a certain place,
@@ -8,9 +9,8 @@ import {Piece, PieceType, Color} from './pieces';
  * @return true if the given piece from the given board can move to the x and y coordinates
  */
 const canMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
-	if (piece.type === PieceType.PAWN) {
-		return canPawnMoveTo(x, y, piece, board);
-	}
+	if (piece.type === PieceType.PAWN) return canPawnMoveTo(x, y, piece, board);
+	if (piece.type === PieceType.BISHOP) return canBishopMoveTo(x, y, piece, board);
 };
 
 const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
@@ -33,6 +33,13 @@ const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolea
 		parseInt(y) - parseInt(piece.y) === -1 && Math.abs(x.charCodeAt(0) - piece.x.charCodeAt(0)) === 1
 		&& pieceInDestination !== undefined && pieceInDestination.color === Color.WHITE
 	);
+};
+
+const canBishopMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
+	const dx = getDeltaX(x, piece.x);
+	const dy = getDeltaX(y, piece.y);
+
+	return dx === dy;
 };
 
 export {canMoveTo};

@@ -35,25 +35,25 @@ const appendInitialPosition = (piece: Piece, index: number) => {
 		case PieceType.PAWN:
 			return {
 				...piece,
-				x: numberToLetter(index),
+				x: numberToLetter(index + 1),
 				y: piece.color === Color.WHITE ? '2' : '7',
 			};
 		case PieceType.KNIGHT:
 			return {
 				...piece,
-				x: numberToLetter(1 + index * 5),
+				x: numberToLetter(2 + index * 5),
 				y: piece.color === Color.WHITE ? '1' : '8',
 			};
 		case PieceType.BISHOP:
 			return {
 				...piece,
-				x: numberToLetter(2 + index * 3),
+				x: numberToLetter(3 + index * 3),
 				y: piece.color === Color.WHITE ? '1' : '8',
 			};
 		case PieceType.ROOK:
 			return {
 				...piece,
-				x: numberToLetter(0 + index * 7),
+				x: numberToLetter(1 + index * 7),
 				y: piece.color === Color.WHITE ? '1' : '8',
 			};
 		case PieceType.QUEEN:
