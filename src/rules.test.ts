@@ -278,5 +278,46 @@ describe('rules', () => {
 				expect(canMoveTo('f', '7', rook, board)).toBe(false);
 			});
 		});
+
+		describe('queen canMoveTo', () => {
+			it('should return true if the queen moves straight', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '3', type: PieceType.QUEEN, color: Color.WHITE},
+				]};
+
+				const queen: Piece = findPiece('f', '3', board);
+
+				expect(canMoveTo('f', '7', queen, board)).toBe(true);
+				expect(canMoveTo('f', '1', queen, board)).toBe(true);
+				expect(canMoveTo('f', '2', queen, board)).toBe(true);
+				expect(canMoveTo('g', '3', queen, board)).toBe(true);
+				expect(canMoveTo('h', '3', queen, board)).toBe(true);
+				expect(canMoveTo('b', '3', queen, board)).toBe(true);
+			});
+
+			it('should return false if the queen moves straight and there is a piece in the trajectory', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '3', type: PieceType.QUEEN, color: Color.WHITE},
+					{x: 'd', y: '3', type: PieceType.QUEEN, color: Color.BLACK},
+				]};
+
+				const queen: Piece = findPiece('f', '3', board);
+
+				expect(canMoveTo('b', '3', queen, board)).toBe(false);
+			});
+
+			it('should return true if the queen moves in diagonal', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '3', type: PieceType.QUEEN, color: Color.WHITE},
+				]};
+
+				const queen: Piece = findPiece('f', '3', board);
+
+				expect(canMoveTo('g', '4', queen, board)).toBe(true);
+				expect(canMoveTo('h', '5', queen, board)).toBe(true);
+				expect(canMoveTo('h', '1', queen, board)).toBe(true);
+				expect(canMoveTo('d', '1', queen, board)).toBe(true);
+			});
+		});
 	});
 });
