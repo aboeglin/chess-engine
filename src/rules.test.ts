@@ -1,6 +1,6 @@
 import {canMoveTo} from './rules';
 import {createBoard, findPiece, Board} from './board';
-import {Color, PieceType} from './pieces';
+import {Color, PieceType, Piece} from './pieces';
 
 describe('rules', () => {
 	describe('canMoveTo', () => {
@@ -193,9 +193,50 @@ describe('rules', () => {
 					{x: 'h', y: '3', type: PieceType.BISHOP, color: Color.BLACK},
 				]};
 
-				const bishop = findPiece('f', '1', board);
+				const bishop: Piece = findPiece('f', '1', board);
 
 				expect(canMoveTo('h', '3', bishop, board)).toBe(true);
+			});
+		});
+
+		describe('knight canMoveTo', () => {
+			it('should return true if it moves by 2 on one axis and 1 on the other axis', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '4', type: PieceType.KNIGHT, color: Color.WHITE},
+				]};
+
+				const knight: Piece = findPiece('f', '4', board);
+
+				expect(canMoveTo('d', '3', knight, board)).toBe(true);
+				expect(canMoveTo('d', '5', knight, board)).toBe(true);
+				expect(canMoveTo('h', '3', knight, board)).toBe(true);
+				expect(canMoveTo('h', '5', knight, board)).toBe(true);
+				expect(canMoveTo('e', '6', knight, board)).toBe(true);
+				expect(canMoveTo('e', '2', knight, board)).toBe(true);
+				expect(canMoveTo('g', '6', knight, board)).toBe(true);
+				expect(canMoveTo('g', '2', knight, board)).toBe(true);
+			});
+
+			it('should return false if there is a piece of the same color at the destination', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '4', type: PieceType.KNIGHT, color: Color.WHITE},
+					{x: 'h', y: '3', type: PieceType.KNIGHT, color: Color.WHITE},
+				]};
+
+				const knight: Piece = findPiece('f', '4', board);
+
+				expect(canMoveTo('h', '3', knight, board)).toBe(false);
+			});
+
+			it('should return true if there is a piece of the opposite color at the destination', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '4', type: PieceType.KNIGHT, color: Color.WHITE},
+					{x: 'h', y: '3', type: PieceType.KNIGHT, color: Color.BLACK},
+				]};
+
+				const knight: Piece = findPiece('f', '4', board);
+
+				expect(canMoveTo('h', '3', knight, board)).toBe(true);
 			});
 		});
 	});
