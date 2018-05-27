@@ -14,6 +14,7 @@ const canMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean =>
 	if (piece.type === PieceType.BISHOP) return canBishopMoveTo(x, y, piece, board);
 	if (piece.type === PieceType.KNIGHT) return canKnightMoveTo(x, y, piece, board);
 	if (piece.type === PieceType.ROOK) return canRookMoveTo(x, y, piece, board);
+	if (piece.type === PieceType.QUEEN) return canQueenMoveTo(x, y, piece, board);
 };
 
 const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
@@ -55,16 +56,16 @@ const canBishopMoveTo = (x: string, y: string, piece: Piece, board: Board): bool
 	);
 };
 
-const getBishopTrajectory = (x1: string, y1: string, x2: string, y2: string) : {x: string, y: string}[] =>
-	Array(getDeltaY(y1, y2) - 1).fill({}).map((_, index) => {
-		const xDirection: number = letterToNumber(x1) - letterToNumber(x2) > 0 ? 1 : -1;
-		const yDirection: number = parseInt(y1) - parseInt(y2) > 0 ? 1 : -1;
+const getBishopTrajectory = (x1: string, y1: string, x2: string, y2: string) : {x: string, y: string}[] => {
+	const xDirection: number = letterToNumber(x1) - letterToNumber(x2) > 0 ? 1 : -1;
+	const yDirection: number = parseInt(y1) - parseInt(y2) > 0 ? 1 : -1;
+	const dy = getDeltaY(y1, y2);
 
-		return {
-			x: numberToLetter((index + 1) * xDirection + letterToNumber(x2)),
-			y: `${(index + 1) * yDirection + parseInt(y2)}`,
-		};
-	});
+	return Array(Math.max(dy - 1, 0)).fill({}).map((_, index) => ({
+		x: numberToLetter((index + 1) * xDirection + letterToNumber(x2)),
+		y: `${(index + 1) * yDirection + parseInt(y2)}`,
+	}));
+};
 
 const canKnightMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
 	const pieceAtDestination: Piece = findPiece(x, y, board);
@@ -99,8 +100,11 @@ const getRookTrajectory = (x1: string, y1: string, x2: string, y2: string) : {x:
 	const yDirection: number = parseInt(y1) - parseInt(y2) > 0 ? 1 : -1;
 
 	return dx > 0
-		? Array(dx - 1).fill({}).map((_, index) => ({x: numberToLetter((index + 1) * xDirection + letterToNumber(x2)), y: y1}))
-		: Array(dy - 1).fill({}).map((_, index) => ({x: x1, y: `${(index + 1) * yDirection + parseInt(y2)}`}));
+		? Array(Math.max(dx - 1, 0)).fill({}).map((_, index) => ({x: numberToLetter((index + 1) * xDirection + letterToNumber(x2)), y: y1}))
+		: Array(Math.max(dy - 1, 0)).fill({}).map((_, index) => ({x: x1, y: `${(index + 1) * yDirection + parseInt(y2)}`}));
 };
+
+const canQueenMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean =>
+	canRookMoveTo(x, y, piece, board) || canBishopMoveTo(x, y, piece, board);
 
 export {canMoveTo};
