@@ -11,6 +11,7 @@ import {getDeltaX, getDeltaY, letterToNumber, numberToLetter} from './utils';
 const canMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
 	if (piece.type === PieceType.PAWN) return canPawnMoveTo(x, y, piece, board);
 	if (piece.type === PieceType.BISHOP) return canBishopMoveTo(x, y, piece, board);
+	if (piece.type === PieceType.KNIGHT) return canKnightMoveTo(x, y, piece, board);
 };
 
 const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
@@ -62,5 +63,14 @@ const getBishopTrajectory = (x1: string, y1: string, x2: string, y2: string) : {
 			y: `${index * yDirection + 1 + parseInt(y2)}`,
 		};
 	});
+
+const canKnightMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
+	const pieceAtDestination: Piece = findPiece(x, y, board);
+
+	return ((
+		getDeltaX(x, piece.x) === 2 && getDeltaY(y, piece.y) === 1 ||
+		getDeltaX(x, piece.x) === 1 && getDeltaY(y, piece.y) === 2
+	) && (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color));
+};
 
 export {canMoveTo};
