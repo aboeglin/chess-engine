@@ -1,4 +1,5 @@
-import {numberToLetter, letterToNumber, coordinateToNumbers, getDelta, getDeltaX, getDeltaY} from './utils';
+import {numberToLetter, letterToNumber, positionToVector, getDelta, getDeltaX, getDeltaY} from './utils';
+import {makePosition} from './position';
 
 describe('utils', () => {
 	describe('numberToLetter', () => {
@@ -27,11 +28,11 @@ describe('utils', () => {
 
 	describe('coordinateToNumbers', () => {
 		it('should export a coordinateToNumbers function', () => {
-			expect(typeof coordinateToNumbers).toBe('function');
+			expect(typeof positionToVector).toBe('function');
 		});
 
 		it('should return {x:1, y:3} for parameters a, 3', () => {
-			expect(coordinateToNumbers('a', '3')).toEqual({x:1, y:3});
+			expect(positionToVector(makePosition('a', '3'))).toEqual({x:1, y:3});
 		});
 	});
 
