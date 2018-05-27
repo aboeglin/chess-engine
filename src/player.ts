@@ -5,9 +5,9 @@ interface Player {
 	color: Color;
 }
 
-const makePlayer = (id: string, color?: Color): Player => ({
+const makePlayer = (id: string, color: Color): Player => ({
 	id,
-	color: color ? color : getRandomColor(),
+	color,
 });
 
 export {makePlayer, Player};
