@@ -1,0 +1,7 @@
+---
+engines:
+ coverage:
+   enabled: true
+   exclude_paths:
+     - src/**/*.test.ts
+     - **/*.json
