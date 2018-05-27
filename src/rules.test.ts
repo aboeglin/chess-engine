@@ -239,5 +239,44 @@ describe('rules', () => {
 				expect(canMoveTo('h', '3', knight, board)).toBe(true);
 			});
 		});
+
+		describe('rook canMoveTo', () => {
+			it('should return true when moving in a straight line', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '1', type: PieceType.ROOK, color: Color.WHITE},
+				]};
+
+				const rook: Piece = findPiece('f', '1', board);
+
+				expect(canMoveTo('f', '7', rook, board)).toBe(true);
+				expect(canMoveTo('b', '1', rook, board)).toBe(true);
+			});
+
+			it('should return false if there is a piece in the trajectory', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '3', type: PieceType.ROOK, color: Color.WHITE},
+					{x: 'f', y: '2', type: PieceType.PAWN, color: Color.WHITE},
+					{x: 'f', y: '4', type: PieceType.PAWN, color: Color.WHITE},
+					{x: 'b', y: '3', type: PieceType.PAWN, color: Color.WHITE},
+				]};
+
+				const rook: Piece = findPiece('f', '3', board);
+
+				expect(canMoveTo('f', '7', rook, board)).toBe(false);
+				expect(canMoveTo('f', '1', rook, board)).toBe(false);
+				expect(canMoveTo('a', '3', rook, board)).toBe(false);
+			});
+
+			it('should return false if the piece at the destination is of the same color', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '1', type: PieceType.ROOK, color: Color.WHITE},
+					{x: 'f', y: '7', type: PieceType.ROOK, color: Color.WHITE},
+				]};
+
+				const rook: Piece = findPiece('f', '1', board);
+
+				expect(canMoveTo('f', '7', rook, board)).toBe(false);
+			});
+		});
 	});
 });

@@ -1,6 +1,7 @@
 import {Board, findPiece} from './board';
 import {Piece, PieceType, Color} from './pieces';
 import {getDeltaX, getDeltaY, letterToNumber, numberToLetter} from './utils';
+import {Position} from './position';
 
 /**
  * A utility function that returns true if a piece can move to a certain place,
@@ -12,6 +13,7 @@ const canMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean =>
 	if (piece.type === PieceType.PAWN) return canPawnMoveTo(x, y, piece, board);
 	if (piece.type === PieceType.BISHOP) return canBishopMoveTo(x, y, piece, board);
 	if (piece.type === PieceType.KNIGHT) return canKnightMoveTo(x, y, piece, board);
+	if (piece.type === PieceType.ROOK) return canRookMoveTo(x, y, piece, board);
 };
 
 const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
@@ -47,7 +49,7 @@ const canBishopMoveTo = (x: string, y: string, piece: Piece, board: Board): bool
 		// bishop goes in diagonal
 		dx === dy
 		// bishop cannot go beyond another piece
-		&& !positionsOnTrajectory.find((position: {x: string, y: string}) => findPiece(position.x, position.y, board) !== undefined)
+		&& !positionsOnTrajectory.find((position: Position) => findPiece(position.x, position.y, board) !== undefined)
 		// bishop cannot attack a piece of the same color
 		&& (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color)
 	);
@@ -59,8 +61,8 @@ const getBishopTrajectory = (x1: string, y1: string, x2: string, y2: string) : {
 		const yDirection: number = parseInt(y1) - parseInt(y2) > 0 ? 1 : -1;
 
 		return {
-			x: numberToLetter(index * xDirection + 1 + letterToNumber(x2)),
-			y: `${index * yDirection + 1 + parseInt(y2)}`,
+			x: numberToLetter((index + 1) * xDirection + letterToNumber(x2)),
+			y: `${(index + 1) * yDirection + parseInt(y2)}`,
 		};
 	});
 
@@ -71,6 +73,34 @@ const canKnightMoveTo = (x: string, y: string, piece: Piece, board: Board): bool
 		getDeltaX(x, piece.x) === 2 && getDeltaY(y, piece.y) === 1 ||
 		getDeltaX(x, piece.x) === 1 && getDeltaY(y, piece.y) === 2
 	) && (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color));
+};
+
+const canRookMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
+	const pieceAtDestination: Piece = findPiece(x, y, board);
+	const dx: number = getDeltaX(x, piece.x);
+	const dy: number = getDeltaX(y, piece.y);
+
+	const positionsOnTrajectory = getRookTrajectory(x, y, piece.x, piece.y);
+
+	return (
+		// rook is going straight
+		(dx === 0 && dy > 0 || dx > 0 && dy === 0)
+		// rook cannot go beyond another piece
+		&& !positionsOnTrajectory.find((position: Position) => findPiece(position.x, position.y, board) !== undefined)
+		// rook cannot attack a piece of the same color
+		&& (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color)
+	);
+};
+
+const getRookTrajectory = (x1: string, y1: string, x2: string, y2: string) : {x: string, y: string}[] => {
+	const dx = getDeltaX(x1, x2);
+	const dy = getDeltaY(y1, y2);
+	const xDirection: number = letterToNumber(x1) - letterToNumber(x2) > 0 ? 1 : -1;
+	const yDirection: number = parseInt(y1) - parseInt(y2) > 0 ? 1 : -1;
+
+	return dx > 0
+		? Array(dx - 1).fill({}).map((_, index) => ({x: numberToLetter((index + 1) * xDirection + letterToNumber(x2)), y: y1}))
+		: Array(dy - 1).fill({}).map((_, index) => ({x: x1, y: `${(index + 1) * yDirection + parseInt(y2)}`}));
 };
 
 export {canMoveTo};
