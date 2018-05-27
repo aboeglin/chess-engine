@@ -1,3 +1,5 @@
+import {Color} from './color';
+
 enum PieceType {
 	PAWN = 'PAWN',
 	KNIGHT = 'KNIGHT',
@@ -7,11 +9,6 @@ enum PieceType {
 	KING = 'KING',
 }
 
-enum Color {
-	BLACK = 'BLACK',
-	WHITE = 'WHITE',
-}
-
 interface Piece {
 	type: PieceType;
 	color: Color;
@@ -19,4 +16,4 @@ interface Piece {
 	y: string;
 }
 
-export {Piece, PieceType, Color};
+export {Piece, PieceType};

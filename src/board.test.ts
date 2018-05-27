@@ -1,5 +1,6 @@
 import {createBoard, findPiece, Board} from './board';
-import {Piece, Color, PieceType} from './pieces';
+import {Piece, PieceType} from './pieces';
+import {Color} from './color';
 
 describe('board', () => {
 	describe('createBoard', () => {

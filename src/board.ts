@@ -1,5 +1,6 @@
-import {Piece, PieceType, Color} from './pieces';
+import {Piece, PieceType} from './pieces';
 import {numberToLetter} from './utils';
+import {Color} from './color';
 
 
 interface Board {

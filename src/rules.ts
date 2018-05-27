@@ -1,7 +1,8 @@
 import {Board, findPiece} from './board';
-import {Piece, PieceType, Color} from './pieces';
+import {Piece, PieceType} from './pieces';
 import {getDeltaX, getDeltaY, letterToNumber, numberToLetter} from './utils';
 import {Position} from './position';
+import {Color} from './color';
 
 /**
  * A utility function that returns true if a piece can move to a certain place,

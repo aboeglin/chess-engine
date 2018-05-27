@@ -1,6 +1,7 @@
 import {canMoveTo} from './rules';
 import {createBoard, findPiece, Board} from './board';
-import {Color, PieceType, Piece} from './pieces';
+import {PieceType, Piece} from './pieces';
+import {Color} from './color';
 
 describe('rules', () => {
 	describe('canMoveTo', () => {
