@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"noImplicitAny": true,
+		"module": "es6",
+		"target": "es5",
+		"lib": ["es7"],
+		"sourceMap": true,
+		"declaration": true
+	},
+	"exclude": [
+		"src/**/*.test.ts",
+		"src/**/*.spec.ts"
+	]
+}
