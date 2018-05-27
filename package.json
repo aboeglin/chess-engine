@@ -6,9 +6,10 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "build:dev": "webpack --mode development && dts-bundle-generator -o ./dist/chess-engine.d.ts src/index.ts",
-    "build:prod": "webpack --mode production && dts-bundle-generator -o ./dist/chess-engine.d.ts src/index.ts",
-    "coverage:ci": "jest --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | codacy-coverage --token ${CODACY_TOKEN} && rm -rf ./coverage"
+    "build:dev": "yarn clean && webpack --mode development && dts-bundle-generator -o ./dist/chess-engine.d.ts src/index.ts",
+    "build:prod": "yarn clean && webpack --mode production && dts-bundle-generator -o ./dist/chess-engine.d.ts src/index.ts",
+    "coverage:ci": "jest --coverage --coverageReporters=lcov && cat ./coverage/lcov.info | codacy-coverage --token ${CODACY_TOKEN} && rm -rf ./coverage",
+	"clean": "rm -rf ./dist"
   },
   "author": "Arnaud Boeglin",
   "license": "ISC",
