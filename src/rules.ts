@@ -15,6 +15,7 @@ const canMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean =>
 	if (piece.type === PieceType.KNIGHT) return canKnightMoveTo(x, y, piece, board);
 	if (piece.type === PieceType.ROOK) return canRookMoveTo(x, y, piece, board);
 	if (piece.type === PieceType.QUEEN) return canQueenMoveTo(x, y, piece, board);
+	if (piece.type === PieceType.KING) return canKingMoveTo(x, y, piece, board);
 };
 
 const canPawnMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
@@ -106,5 +107,16 @@ const getRookTrajectory = (x1: string, y1: string, x2: string, y2: string) : {x:
 
 const canQueenMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean =>
 	canRookMoveTo(x, y, piece, board) || canBishopMoveTo(x, y, piece, board);
+
+const canKingMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
+	const pieceAtDestination: Piece = findPiece(x, y, board);
+
+	return (
+		// king moves to a neighbour square
+		(getDeltaX(x, piece.x) === 1 || getDeltaY(y, piece.y) === 1)
+		// king cannot attack a piece of the same color
+		&& (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color)
+	);
+};
 
 export {canMoveTo};

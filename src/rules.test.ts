@@ -319,5 +319,33 @@ describe('rules', () => {
 				expect(canMoveTo('d', '1', queen, board)).toBe(true);
 			});
 		});
+
+		describe('king canMoveTo', () => {
+			it('should return true if the king moves to a neighbour square', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '3', type: PieceType.KING, color: Color.WHITE},
+				]};
+
+				const king: Piece = findPiece('f', '3', board);
+
+				expect(canMoveTo('f', '4', king, board)).toBe(true);
+				expect(canMoveTo('f', '2', king, board)).toBe(true);
+				expect(canMoveTo('g', '4', king, board)).toBe(true);
+				expect(canMoveTo('g', '2', king, board)).toBe(true);
+				expect(canMoveTo('e', '4', king, board)).toBe(true);
+				expect(canMoveTo('e', '2', king, board)).toBe(true);
+			});
+
+			it('should return false if the destination piece is the same color as the one of the king', () => {
+				const board: Board = {pieces: [
+					{x: 'f', y: '3', type: PieceType.KING, color: Color.WHITE},
+					{x: 'f', y: '4', type: PieceType.QUEEN, color: Color.WHITE},
+				]};
+
+				const king: Piece = findPiece('f', '3', board);
+
+				expect(canMoveTo('f', '4', king, board)).toBe(false);
+			});
+		});
 	});
 });
