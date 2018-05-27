@@ -8,6 +8,31 @@ describe('rules', () => {
 			expect(typeof canMoveTo).toBe('function');
 		});
 
+		it('should return false if there is no movement', () => {
+			const board: Board = {pieces: [
+				{x: 'f', y: '1', type: PieceType.PAWN, color: Color.WHITE},
+				{x: 'f', y: '2', type: PieceType.BISHOP, color: Color.WHITE},
+				{x: 'f', y: '3', type: PieceType.KNIGHT, color: Color.WHITE},
+				{x: 'f', y: '4', type: PieceType.ROOK, color: Color.WHITE},
+				{x: 'f', y: '5', type: PieceType.QUEEN, color: Color.WHITE},
+				{x: 'f', y: '6', type: PieceType.KING, color: Color.WHITE},
+			]};
+
+			const pawn = findPiece('f', '1', board);
+			const bishop = findPiece('f', '2', board);
+			const knight = findPiece('f', '3', board);
+			const rook = findPiece('f', '4', board);
+			const queen = findPiece('f', '5', board);
+			const king = findPiece('f', '6', board);
+
+			expect(canMoveTo('f', '1', pawn, board)).toBe(false);
+			expect(canMoveTo('f', '2', bishop, board)).toBe(false);
+			expect(canMoveTo('f', '3', knight, board)).toBe(false);
+			expect(canMoveTo('f', '4', rook, board)).toBe(false);
+			expect(canMoveTo('f', '5', queen, board)).toBe(false);
+			expect(canMoveTo('f', '6', king, board)).toBe(false);
+		});
+
 		describe('pawn canMoveTo', () => {
 			it('should return false for a pawn that goes back', () => {
 				const board: Board = createBoard();
