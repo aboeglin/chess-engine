@@ -1,13 +1,13 @@
-import {makePosition, Position} from './position';
+import {Position, createPosition} from './position';
 
 describe('position', () => {
-	describe('makePosition - a factory for positions', () => {
-		it('should export a function makePosition', () => {
-			expect(typeof makePosition).toBe('function');
+	describe('createPosition - a factory for positions', () => {
+		it('should export a function createPosition', () => {
+			expect(typeof createPosition).toBe('function');
 		});
 
 		it('should return a position object from the given parameters', () => {
-			const position: Position = makePosition('d', '3');
+			const position: Position = createPosition('d', '3');
 			expect(position).toEqual({x: 'd', y: '3'});
 		});
 	});

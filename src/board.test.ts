@@ -1,4 +1,4 @@
-import {createBoard, findPiece, Board} from './board';
+import {Board, createBoard, findPiece, removePieceAt} from './board';
 import {Piece, PieceType} from './pieces';
 import {Color} from './color';
 
