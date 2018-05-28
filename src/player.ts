@@ -5,9 +5,9 @@ interface Player {
 	color: Color;
 }
 
-const makePlayer = (id: string, color: Color): Player => ({
+const createPlayer = (id: string, color: Color): Player => ({
 	id,
 	color,
 });
 
-export {makePlayer, Player};
+export {createPlayer, Player};

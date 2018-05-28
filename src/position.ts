@@ -3,6 +3,6 @@ interface Position {
 	y: string;
 }
 
-const makePosition = (x: string, y:string): Position => ({x, y});
+const createPosition = (x: string, y:string): Position => ({x, y});
 
-export {makePosition, Position};
+export {createPosition, Position};

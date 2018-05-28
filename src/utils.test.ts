@@ -1,5 +1,5 @@
 import {numberToLetter, letterToNumber, positionToVector, getDelta, getDeltaX, getDeltaY} from './utils';
-import {makePosition} from './position';
+import {createPosition} from './position';
 
 describe('utils', () => {
 	describe('numberToLetter', () => {
@@ -32,7 +32,7 @@ describe('utils', () => {
 		});
 
 		it('should return {x:1, y:3} for parameters a, 3', () => {
-			expect(positionToVector(makePosition('a', '3'))).toEqual({x:1, y:3});
+			expect(positionToVector(createPosition('a', '3'))).toEqual({x:1, y:3});
 		});
 	});
 

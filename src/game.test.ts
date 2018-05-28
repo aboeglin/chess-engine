@@ -1,5 +1,9 @@
-import {Game, createGame} from './game';
-import {Player, makePlayer} from './player';
+import {Game, createGame, move} from './game';
+import {Player, createPlayer} from './player';
+import {findPiece} from './board';
+import {PieceType} from './pieces';
+import {Move, createMove} from './move';
+import {createPosition} from './position';
 import {Color} from './color';
 
 describe('game', () => {
@@ -9,8 +13,8 @@ describe('game', () => {
 		});
 
 		it('should return a fresh Game object', () => {
-			const p1: Player = makePlayer('id-1', Color.WHITE);
-			const p2: Player = makePlayer('id-2', Color.BLACK);
+			const p1: Player = createPlayer('id-1', Color.WHITE);
+			const p2: Player = createPlayer('id-2', Color.BLACK);
 
 			const game: Game = createGame(p1, p2);
 
