@@ -15,4 +15,8 @@ const getDeltaX = (x1: string, x2: string): number => getDelta(letterToNumber(x1
 
 const getDeltaY = (x1: string, x2: string): number => getDelta(parseInt(x1), parseInt(x2));
 
-export {numberToLetter, letterToNumber, positionToVector, getDelta, getDeltaX, getDeltaY};
+const compose = (...fns: Function[]) => fns.reduce((f, g) => (...args: any[]) => f(g(...args)));
+
+const concat = (value: any, arr: any[]) => arr.concat(value);
+
+export {numberToLetter, letterToNumber, positionToVector, getDelta, getDeltaX, getDeltaY, compose, concat};
