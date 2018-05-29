@@ -27,30 +27,30 @@ describe('game', () => {
 	});
 
 	describe('move', () => {
+		const p1: Player = createPlayer('id-1', Color.WHITE);
+		const p2: Player = createPlayer('id-2', Color.BLACK);
+		const game: Game = createGame(p1, p2);
+
 		it('should export a function move', () => {
 			expect(typeof move).toBe('function');
 		});
 
 		it('should return a game object', () => {
-			const p1: Player = createPlayer('id-1', Color.WHITE);
-			const p2: Player = createPlayer('id-2', Color.BLACK);
-
-			const game: Game = createGame(p1, p2);
 			const afterMove: Game = move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game);
-
 			expect(findPiece('d', '4', afterMove.board)).toEqual({type: PieceType.PAWN, color: Color.WHITE, x: 'd', y:'4'});
 		});
 
 		it('should remove a piece that has been killed', () => {
-			const p1: Player = createPlayer('id-1', Color.WHITE);
-			const p2: Player = createPlayer('id-2', Color.BLACK);
-
-			const game: Game = createGame(p1, p2);
 			const afterFirstMove: Game = move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game);
 			const afterSecondMove: Game = move(createMove({x: 'e', y: '7'}, {x: 'e', y: '5'}), afterFirstMove);
 			const afterThirdMove: Game = move(createMove({x: 'd', y: '4'}, {x: 'e', y: '5'}), afterSecondMove);
 
 			expect(findPiece('e', '5', afterThirdMove.board)).toEqual({type: PieceType.PAWN, color: Color.WHITE, x: 'e', y:'5'});
+		});
+
+		it('should should store the previous board in the undo array', () => {
+			const afterMove: Game = move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game);
+			expect(afterMove.undo[0]).toBe(game.board);
 		});
 	});
 });
