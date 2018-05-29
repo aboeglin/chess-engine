@@ -54,7 +54,7 @@ const canBishopMoveTo = (x: string, y: string, piece: Piece, board: Board): bool
 		// bishop cannot go beyond another piece
 		&& !positionsOnTrajectory.find((position: Position) => findPiece(position.x, position.y, board) !== undefined)
 		// bishop cannot attack a piece of the same color
-		&& (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color)
+		&& (!pieceAtDestination || pieceAtDestination.color !== piece.color)
 	);
 };
 
@@ -75,7 +75,7 @@ const canKnightMoveTo = (x: string, y: string, piece: Piece, board: Board): bool
 	return ((
 		getDeltaX(x, piece.x) === 2 && getDeltaY(y, piece.y) === 1 ||
 		getDeltaX(x, piece.x) === 1 && getDeltaY(y, piece.y) === 2
-	) && (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color));
+	) && (!pieceAtDestination || pieceAtDestination.color !== piece.color));
 };
 
 const canRookMoveTo = (x: string, y: string, piece: Piece, board: Board): boolean => {
@@ -91,7 +91,7 @@ const canRookMoveTo = (x: string, y: string, piece: Piece, board: Board): boolea
 		// rook cannot go beyond another piece
 		&& !positionsOnTrajectory.find((position: Position) => findPiece(position.x, position.y, board) !== undefined)
 		// rook cannot attack a piece of the same color
-		&& (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color)
+		&& (!pieceAtDestination || pieceAtDestination.color !== piece.color)
 	);
 };
 
@@ -116,7 +116,7 @@ const canKingMoveTo = (x: string, y: string, piece: Piece, board: Board): boolea
 		// king moves to a neighbour square
 		(getDeltaX(x, piece.x) === 1 || getDeltaY(y, piece.y) === 1)
 		// king cannot attack a piece of the same color
-		&& (!pieceAtDestination || pieceAtDestination && pieceAtDestination.color !== piece.color)
+		&& (!pieceAtDestination || pieceAtDestination.color !== piece.color)
 	);
 };
 
