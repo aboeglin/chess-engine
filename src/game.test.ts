@@ -35,22 +35,31 @@ describe('game', () => {
 			expect(typeof move).toBe('function');
 		});
 
-		it('should return a game object', () => {
-			const afterMove: Game = move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game);
-			expect(findPiece('d', '4', afterMove.board)).toEqual({type: PieceType.PAWN, color: Color.WHITE, x: 'd', y:'4'});
+		it('should return a game object', (done) => {
+			move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game).then((g: Game) => {
+				expect(findPiece('d', '4', g.board)).toEqual({type: PieceType.PAWN, color: Color.WHITE, x: 'd', y:'4'});
+				done();
+			});
 		});
 
 		it('should remove a piece that has been killed', () => {
-			const afterFirstMove: Game = move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game);
-			const afterSecondMove: Game = move(createMove({x: 'e', y: '7'}, {x: 'e', y: '5'}), afterFirstMove);
-			const afterThirdMove: Game = move(createMove({x: 'd', y: '4'}, {x: 'e', y: '5'}), afterSecondMove);
-
-			expect(findPiece('e', '5', afterThirdMove.board)).toEqual({type: PieceType.PAWN, color: Color.WHITE, x: 'e', y:'5'});
+			move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game).then((g: Game) => {
+				move(createMove({x: 'e', y: '7'}, {x: 'e', y: '5'}), g).then((g: Game) => {
+					move(createMove({x: 'd', y: '4'}, {x: 'e', y: '5'}), g).then((g: Game) => {
+						expect(findPiece('e', '5', g.board)).toEqual({type: PieceType.PAWN, color: Color.WHITE, x: 'e', y:'5'});
+					});
+				});
+			});
 		});
 
 		it('should should store the previous board in the undo array', () => {
-			const afterMove: Game = move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game);
-			expect(afterMove.undo[0]).toBe(game.board);
+			move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game).then((g: Game) => {
+				expect(g.undo[0]).toBe(game.board);
+			});
+		});
+
+		it('should return stuff (to define) when the first piece to move is black', () => {
+
 		});
 	});
 });
