@@ -42,24 +42,30 @@ describe('game', () => {
 			});
 		});
 
-		it('should remove a piece that has been killed', () => {
+		it('should remove a piece that has been killed', (done) => {
 			move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game).then((g: Game) => {
 				move(createMove({x: 'e', y: '7'}, {x: 'e', y: '5'}), g).then((g: Game) => {
 					move(createMove({x: 'd', y: '4'}, {x: 'e', y: '5'}), g).then((g: Game) => {
 						expect(findPiece('e', '5', g.board)).toEqual({type: PieceType.PAWN, color: Color.WHITE, x: 'e', y:'5'});
+						done();
 					});
 				});
 			});
 		});
 
-		it('should should store the previous board in the undo array', () => {
+		it('should should store the previous board in the undo array', (done) => {
 			move(createMove({x: 'd', y: '2'}, {x: 'd', y: '4'}), game).then((g: Game) => {
 				expect(g.undo[0]).toBe(game.board);
+				done();
 			});
 		});
 
-		it('should return stuff (to define) when the first piece to move is black', () => {
-
+		it('should return an error WRONG_PLAAYER when the first piece to move is black', (done) => {
+			const wrongGame: Game = createGame(p2, p1);
+			move(createMove({x: 'd', y: '7'}, {x: 'd', y: '5'}), wrongGame).catch((e: Error) => {
+				expect(e).toEqual(Error('WRONG_PLAYER'));
+				done();
+			});
 		});
 	});
 });

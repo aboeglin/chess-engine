@@ -26,15 +26,10 @@ const move = (m: Move, game: Game): Promise<Game> => {
 	const pieceAtDestination = findPiece(m.to.x, m.to.y, game.board);
 	const pieceToMove = findPiece(m.from.x, m.from.y, game.board);
 
-	if (game.undo.length % 2 === 0 && pieceToMove.color !== Color.WHITE) {
-		console.log('BIM');
-	}
-
 	return new Promise((resolve, reject) => {
 		if (game.undo.length % 2 === 0 && pieceToMove.color !== Color.WHITE) {
-			reject(Error('It broke'));
-		}
-		else {
+			reject(Error('WRONG_PLAYER'));
+		} else {
 			resolve({
 				board: {
 					pieces: compose(cConcat({...pieceToMove, x: m.to.x, y: m.to.y}), cRemovePieceAt(m.from), cRemovePieceAt(m.to))(game.board.pieces),
