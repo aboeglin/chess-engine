@@ -142,4 +142,15 @@ describe('board', () => {
 		});
 	});
 
+	describe('removePieceAt', () => {
+		it('should export a function removePieceAt', () => {
+			expect(typeof removePieceAt).toBe('function');
+		});
+
+		it('should remove the piece at the specified location', () => {
+			const pieces: Piece[] = [{x: 'd', y: '2', type: PieceType.KNIGHT, color: Color.BLACK}];
+
+			expect(removePieceAt({x: 'd', y: '2'}, pieces)).toEqual([]);
+		});
+	});
 });

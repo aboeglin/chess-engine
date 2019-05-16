@@ -1,6 +1,7 @@
 import {Piece, PieceType} from './pieces';
 import {numberToLetter} from './utils';
 import {Color} from './color';
+import {Position} from './position';
 
 
 interface Board {
@@ -86,4 +87,12 @@ const appendInitialPosition = (piece: Piece, index: number) => {
 const findPiece = (x: string, y: string, board: Board) : Piece =>
 	board.pieces.find((piece: Piece) => piece.x === x && piece.y === y);
 
-export {createBoard, findPiece, Board};
+const removePieceAt = (position: Position, pieces: Piece[]) => {
+	const index = pieces.findIndex((piece: Piece) => position.x === piece.x && position.y === piece.y);
+
+	return index >= 0
+		? [...pieces.slice(0, index), ...pieces.slice(index + 1)]
+		: pieces;
+};
+
+export {Board, createBoard, findPiece, removePieceAt};
